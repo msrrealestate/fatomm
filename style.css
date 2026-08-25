@@ -1,0 +1,320 @@
+* {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+    user-select: none;
+    -webkit-tap-highlight-color: transparent;
+}
+
+body {
+    min-height: 100vh;
+    background: radial-gradient(circle at center, #320a3e 0%, #0d0112 100%);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-family: -apple-system, BlinkMacSystemFont, "SF Pro Display", "SF Pro Text", "Cairo", sans-serif;
+    color: #ffffff;
+    overflow-x: hidden;
+    position: relative;
+}
+
+.bg-watermark {
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%) rotate(-8deg);
+    font-family: -apple-system, BlinkMacSystemFont, "SF Pro Display", sans-serif;
+    font-size: clamp(3.5rem, 11vw, 8rem);
+    font-weight: 900;
+    color: rgba(255, 255, 255, 0.03);
+    white-space: nowrap;
+    pointer-events: none;
+    z-index: 0;
+    letter-spacing: 2px;
+}
+
+.apple-emoji {
+    width: 1.1em;
+    height: 1.1em;
+    vertical-align: -0.2em;
+    display: inline-block;
+    object-fit: contain;
+}
+
+.title-emoji { width: 1.5em; height: 1.5em; }
+.row-emoji { width: 1.6em; height: 1.6em; margin: 0 4px; }
+.btn-emoji { width: 1.1em; height: 1.1em; margin-right: 4px; }
+
+/* شاشة الباسورد */
+.lock-screen {
+    position: fixed;
+    inset: 0;
+    z-index: 100;
+    background: rgba(10, 1, 15, 0.92);
+    backdrop-filter: blur(12px);
+    -webkit-backdrop-filter: blur(12px);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 20px;
+}
+
+.lock-card {
+    background: rgba(255, 255, 255, 0.08);
+    border: 1px solid rgba(255, 255, 255, 0.18);
+    border-radius: 26px;
+    padding: 32px 24px;
+    width: 100%;
+    max-width: 340px;
+    text-align: center;
+    box-shadow: 0 20px 50px rgba(0, 0, 0, 0.5);
+}
+
+.lock-icon { font-size: 2.5rem; margin-bottom: 12px; }
+
+.lock-card h2 {
+    font-size: 1.2rem;
+    font-weight: 700;
+    margin-bottom: 18px;
+    color: #f7e6fb;
+    font-family: -apple-system, BlinkMacSystemFont, "Cairo", sans-serif;
+}
+
+.lock-card input {
+    width: 100%;
+    padding: 14px 16px;
+    border-radius: 16px;
+    border: 1px solid rgba(255, 255, 255, 0.25);
+    background: rgba(255, 255, 255, 0.12);
+    color: #ffffff;
+    font-size: 1rem;
+    font-family: -apple-system, BlinkMacSystemFont, sans-serif;
+    text-align: center;
+    outline: none;
+    margin-bottom: 16px;
+}
+
+.lock-card button {
+    width: 100%;
+    padding: 14px;
+    border-radius: 16px;
+    border: none;
+    background: #ffffff;
+    color: #000000;
+    font-weight: 700;
+    font-size: 1.05rem;
+    font-family: -apple-system, BlinkMacSystemFont, "Cairo", sans-serif;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.error-msg {
+    color: #ff4d6d;
+    font-size: 0.88rem;
+    margin-top: 12px;
+    display: none;
+    font-family: -apple-system, BlinkMacSystemFont, "Cairo", sans-serif;
+}
+
+/* حاوية الورد الممتلئ والساقط */
+.petals-shower {
+    position: fixed;
+    inset: 0;
+    pointer-events: none;
+    z-index: 90;
+    overflow: hidden;
+}
+
+.burst-petal {
+    position: absolute;
+    will-change: transform, opacity;
+}
+
+@keyframes popIn {
+    0% { transform: scale(0) rotate(0deg); opacity: 0; }
+    100% { transform: scale(1) rotate(15deg); opacity: 1; }
+}
+
+@keyframes fallDown {
+    0% { transform: translateY(0) rotate(15deg); opacity: 1; }
+    100% { transform: translateY(115vh) rotate(360deg); opacity: 0; }
+}
+
+.bg-hearts { position: absolute; inset: 0; pointer-events: none; z-index: 1; }
+.floating-heart {
+    position: absolute;
+    bottom: -50px;
+    will-change: transform, opacity;
+    animation: floatUp infinite ease-in-out;
+    opacity: 0.8;
+}
+
+@keyframes floatUp {
+    0% { transform: translate3d(0, 0, 0) scale(0.8); opacity: 0; }
+    20% { opacity: 0.85; }
+    100% { transform: translate3d(0, -115vh, 0) scale(1.1); opacity: 0; }
+}
+
+/* القلوب عند التفاعل باللمس */
+.touch-heart {
+    position: fixed;
+    pointer-events: none;
+    z-index: 999;
+    will-change: transform, opacity;
+    animation: touchFloat 1.2s cubic-bezier(0.25, 1, 0.5, 1) forwards;
+}
+
+@keyframes touchFloat {
+    0% { transform: translate3d(-50%, -50%, 0) scale(0.5); opacity: 1; }
+    100% { transform: translate3d(-50%, -120px, 0) scale(1.4); opacity: 0; }
+}
+
+/* الكارت الرئيسي */
+.container {
+    position: relative;
+    z-index: 2;
+    width: 100%;
+    max-width: 440px;
+    padding: 25px 20px;
+    text-align: center;
+}
+
+.container.hidden { display: none; }
+
+.names { display: flex; align-items: center; justify-content: center; gap: 10px; margin-bottom: 8px; }
+.names h1 {
+    font-size: 2.3rem;
+    font-weight: 800;
+    font-family: -apple-system, BlinkMacSystemFont, "SF Pro Display", sans-serif;
+    background: linear-gradient(180deg, #ffffff 0%, #f3cefb 100%);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    animation: heartbeat 2.5s infinite ease-in-out;
+}
+
+@keyframes heartbeat {
+    0%, 100% { transform: scale(1); }
+    50% { transform: scale(1.04); }
+}
+
+.love-quote {
+    direction: ltr;
+    font-size: 0.92rem;
+    line-height: 1.5;
+    color: #e3beea;
+    margin-bottom: 12px;
+    opacity: 0.92;
+}
+
+.emojis-row { margin-bottom: 22px; }
+
+/* صندوق الرسالة بخط آيفون الأصلي */
+.typewriter-card {
+    position: relative;
+    background: rgba(255, 255, 255, 0.1);
+    border: 1px solid rgba(255, 200, 255, 0.2);
+    border-radius: 22px;
+    padding: 22px 20px;
+    margin-bottom: 24px;
+    min-height: 100px;
+    text-align: right;
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.35);
+}
+
+#typewriterText {
+    font-family: -apple-system, BlinkMacSystemFont, "SF Pro Text", "SF Arabic", "Cairo", sans-serif;
+    font-size: 1.05rem;
+    font-weight: 600;
+    color: #faeaff;
+    line-height: 1.85;
+    direction: rtl;
+    white-space: pre-wrap;
+    display: inline;
+}
+
+.blinking-cursor {
+    font-weight: 300;
+    font-size: 1.2rem;
+    color: #ff9ee2;
+    animation: blink 0.8s infinite;
+    margin-right: 2px;
+    display: inline;
+}
+
+@keyframes blink {
+    0%, 100% { opacity: 1; }
+    50% { opacity: 0; }
+}
+
+/* المشغل */
+.ios-player-widget {
+    background: rgba(255, 255, 255, 0.12);
+    border: 1px solid rgba(255, 255, 255, 0.2);
+    border-radius: 24px;
+    padding: 20px;
+    box-shadow: 0 15px 35px rgba(0, 0, 0, 0.45);
+    direction: rtl;
+}
+
+.widget-header { display: flex; align-items: center; gap: 14px; margin-bottom: 16px; }
+
+.album-art {
+    width: 50px;
+    height: 50px;
+    background: rgba(255, 255, 255, 0.18);
+    border-radius: 14px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 24px;
+    flex-shrink: 0;
+}
+
+.track-details { text-align: right; flex: 1; }
+.track-title { font-size: 1rem; font-weight: 700; color: #ffffff; font-family: -apple-system, BlinkMacSystemFont, "Cairo", sans-serif; }
+.artist-name { font-size: 0.82rem; color: rgba(255, 255, 255, 0.7); font-family: -apple-system, BlinkMacSystemFont, "Cairo", sans-serif; }
+
+.progress-section { margin-bottom: 16px; }
+.ios-slider {
+    -webkit-appearance: none;
+    appearance: none;
+    width: 100%;
+    height: 4px;
+    border-radius: 10px;
+    background: rgba(255, 255, 255, 0.25);
+    outline: none;
+}
+
+.ios-slider::-webkit-slider-thumb {
+    -webkit-appearance: none;
+    appearance: none;
+    width: 12px;
+    height: 12px;
+    border-radius: 50%;
+    background: #ffffff;
+}
+
+.time-stamps {
+    display: flex;
+    justify-content: space-between;
+    font-size: 0.72rem;
+    color: rgba(255, 255, 255, 0.65);
+    margin-top: 5px;
+    direction: ltr;
+}
+
+.controls { display: flex; align-items: center; justify-content: center; gap: 25px; }
+.btn-ctrl { background: none; border: none; color: #ffffff; font-size: 1.2rem; cursor: pointer; }
+.btn-ctrl.play-btn {
+    background: #ffffff;
+    color: #000000;
+    width: 44px;
+    height: 44px;
+    border-radius: 50%;
+    font-size: 1rem;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}

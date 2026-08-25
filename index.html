@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html lang="ar">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>Kimo & Fatoma</title>
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Cairo:wght@600;700;800&display=swap">
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+    <div class="bg-watermark">Kimo & Fatoma</div>
+
+    <!-- شاشة الباسورد -->
+    <div class="lock-screen" id="lockScreen">
+        <div class="lock-card">
+            <div class="lock-icon">
+                <img src="https://cdn.jsdelivr.net/npm/emoji-datasource-apple@14.0.0/img/apple/64/1f512.png" alt="🔒" class="apple-emoji">
+            </div>
+            <h2>دخل الباسورد </h2>
+            <input type="text" id="passInput" placeholder="دخل الباسورد ..." autocomplete="off">
+            <button id="unlockBtn">
+                دخول 
+                <img src="https://cdn.jsdelivr.net/npm/emoji-datasource-apple@14.0.0/img/apple/64/2728.png" alt="✨" class="apple-emoji btn-emoji">
+            </button>
+            <p class="error-msg" id="errorMsg">كلمة السر خاطئة، حاول مرة أخرى!</p>
+        </div>
+    </div>
+
+    <!-- حاوية الانفجار وتساقط الورد والقلوب -->
+    <div class="petals-shower" id="petalsShower"></div>
+    <div class="bg-hearts" id="heartsContainer"></div>
+
+    <!-- المحتوى الرئيسي -->
+    <main class="container hidden" id="mainContent">
+        <div class="names">
+            <img src="https://cdn.jsdelivr.net/npm/emoji-datasource-apple@14.0.0/img/apple/64/1f496.png" class="apple-emoji title-emoji" alt="💖">
+            <h1>Kimo & Fatoma</h1>
+            <img src="https://cdn.jsdelivr.net/npm/emoji-datasource-apple@14.0.0/img/apple/64/1f496.png" class="apple-emoji title-emoji" alt="💖">
+        </div>
+
+        <p class="love-quote">
+            You are my entire world, my forever love, and the best thing that ever happened to me
+        </p>
+
+        <div class="emojis-row">
+            <img src="https://cdn.jsdelivr.net/npm/emoji-datasource-apple@14.0.0/img/apple/64/2728.png" class="apple-emoji row-emoji" alt="✨">
+            <img src="https://cdn.jsdelivr.net/npm/emoji-datasource-apple@14.0.0/img/apple/64/1f496.png" class="apple-emoji row-emoji" alt="💖">
+            <img src="https://cdn.jsdelivr.net/npm/emoji-datasource-apple@14.0.0/img/apple/64/1f48d.png" class="apple-emoji row-emoji" alt="💍">
+            <img src="https://cdn.jsdelivr.net/npm/emoji-datasource-apple@14.0.0/img/apple/64/1f97a.png" class="apple-emoji row-emoji" alt="🥺">
+        </div>
+
+        <!-- صندوق الكتابة -->
+        <div class="typewriter-card">
+            <span id="typewriterText"></span><span class="blinking-cursor">|</span>
+        </div>
+
+        <!-- مشغل الصوت -->
+        <div class="ios-player-widget">
+            <div class="widget-header">
+                <div class="album-art">
+                    <img src="https://cdn.jsdelivr.net/npm/emoji-datasource-apple@14.0.0/img/apple/64/1f3b1.png" class="apple-emoji" alt="🎵">
+                </div>
+                <div class="track-details">
+                    <h3 class="track-title">وانت معايا يفطومتي</h3>
+                    <p class="artist-name">عمرو دياب - باين حبيت</p>
+                </div>
+            </div>
+
+            <div class="progress-section">
+                <input type="range" id="seekBar" class="ios-slider" value="0" min="0" max="100">
+                <div class="time-stamps">
+                    <span id="currentTime">0:00</span>
+                    <span id="duration">0:00</span>
+                </div>
+            </div>
+
+            <div class="controls">
+                <button class="btn-ctrl" id="prevBtn">⏮</button>
+                <button class="btn-ctrl play-btn" id="playBtn">❚❚</button>
+                <button class="btn-ctrl" id="nextBtn">⏭</button>
+            </div>
+        </div>
+    </main>
+
+    <audio id="audioPlayer" src="song1.mp3"></audio>
+
+    <script src="script.js"></script>
+</body>
+</html>
